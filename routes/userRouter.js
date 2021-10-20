@@ -4,6 +4,12 @@ const bodyParser = require("body-parser");
 
 var router = Router();
 
+router.get("/",(req,res,next)=>{
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.json({home:"home"});
+})
+
 router.post('/signup', (req, res, next) => {
    //console.log("in signup route",req);
    User.find({username:req.body.username}).then((users)=>{
@@ -32,11 +38,11 @@ router.post('/signup', (req, res, next) => {
       }
       else{
         res.statusCode = 200;
-        res.cookie('user',user.username,{signed:true,maxAge:900000000,sameSite:"none",secure:true})
+        res.cookie('user',user.username,{signed:true,maxAge:900000000})
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.json({account:{username:user.username}});
-        console.log("setting credn headers",res.getHeaders())
+       // console.log("setting credn headers",res.getHeaders())
         
       }
       
