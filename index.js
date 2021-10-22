@@ -33,7 +33,7 @@ app.use(addHeaders)
 app.use(userRouter);
 function auth(req,res,next){
   //console.log("signedcookies",req.signedCookies.user,req.headers.cookie)
-  if(req.signedCookies.user){
+  if(req.signedCookies && req.signedCookies.user){
     var username = req.signedCookies.user;
     User.findOne({username:username}).then(user=>next()).catch(err=>next(err));
   }
