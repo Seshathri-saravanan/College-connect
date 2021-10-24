@@ -1,5 +1,6 @@
 const {Router} = require("express");
 const User = require("../models/User.js");
+const Account = require("../models/Account.js");
 const bodyParser = require("body-parser");
 
 var router = Router();
@@ -21,11 +22,14 @@ router.post('/signup', (req, res, next) => {
       }
    })
    User.create(req.body).then((user) => {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json({account:{username:user.username}});
+      Account.create({username:user.username,name:user.username}).then((account)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({account:{username:user.username}});
+      }).catch((err)=>console.log(err));
+      
      
-   });
+   }).catch((err)=>console.log(err));
  });
  
  router.post('/login', (req, res,next) => {

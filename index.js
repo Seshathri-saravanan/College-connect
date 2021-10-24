@@ -26,19 +26,23 @@ function addHeaders(req,res,next){
   res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
   res.setHeader('Access-Control-Allow-Credentials', true);
-  console.log("setting acces con c header as true",req.headers,res.headers);
+  //console.log("setting acces con c header as true",req.headers,res.headers);
   next();
 }
 app.use(addHeaders)
 app.use(userRouter);
 function auth(req,res,next){
+  console.log("auth",req.signedcookies)
   //console.log("signedcookies",req.signedCookies.user,req.headers.cookie)
   if(req.signedCookies && req.signedCookies.user){
     var username = req.signedCookies.user;
-    User.findOne({username:username}).then(user=>next()).catch(err=>next(err));
+    User.findOne({username:username}).then(user=>next()).catch(err=>res.status(400).send(err));
   }
   else{
-    next(new Error("UnAuthorized"));
+    res.status(400).send({
+       message: 'Unauthorized'
+    });
+    //res.end();
   }
 }
 app.use(auth);
