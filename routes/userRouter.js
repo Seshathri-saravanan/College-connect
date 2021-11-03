@@ -33,7 +33,7 @@ router.post('/signup', (req, res, next) => {
  });
  
  router.post('/login', (req, res,next) => {
-   //console.log("login req",req.body)
+   console.log("login req",req.body)
   User.findOne({username:req.body.username})
   .then((user) => {
       console.log('user found ', user);
