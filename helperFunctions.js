@@ -22,8 +22,14 @@ function getGroupsByUsername(groups,username){
 function getPostsByUsername(posts,groups,username){
     var groupsByUsername = getGroupsByUsername(groups,username);
     var postsByUsername = []
-    for(var group of groups){
+    for(var group of groupsByUsername){
         postsByUsername = [...postsByUsername,...getPostsByGroupID(posts,group.ID)]
     }
     return postsByUsername;
+}
+
+module.exports = {
+    getPostsByGroupID,
+    getGroupsByUsername,
+    getPostsByUsername
 }
