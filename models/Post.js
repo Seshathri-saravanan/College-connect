@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const {Schema} = mongoose
 
 var Post = new Schema({
-	createdBy:{
+	ownerID:{
 		type:String,
 		required:true
 	},
@@ -10,9 +10,25 @@ var Post = new Schema({
 		type:String,
 		required:true
 	},
-	filelinks:{
+	type:{
+		type:String,
+		required:true
+	},
+	file_links:{
 		type:Array,
 		required:true
+	},
+	expiryTime:{
+		type:String,
+		required:false
+	},
+	pollData:{
+		type:String,
+		required:false
+	},
+	pollStatus:{
+		type:String,
+		required:false
 	},
 	groups:{
 		type:Array,

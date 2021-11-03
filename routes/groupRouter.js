@@ -1,0 +1,32 @@
+const {Router} = require("express");
+const Group = require("../models/Group.js");
+const bodyParser = require("body-parser");
+const {getGroupsByUsername} = require("../helperFunctions");
+var router = Router();
+
+router.get("/groups",async (req,res,next)=>{
+	const username =  req.signedCookies.user;
+	res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    var groups = await Group.find({});
+    var groupsByUsername = getGroupsByUsername(groups,username);
+    res.statusCode=200;
+    res.json({groups:groupsByUsername});
+    next();
+})
+
+router.get("/group",async (req,res,next)=>{
+	const username =  req.signedCookies.user;
+    const groupID = req.body.groupId;
+	res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    Group.findOne({_id:groupID})
+	  .then((group) => {
+	        res.statusCode = 200;
+	        res.json({group});
+	      }, (err) => next(err))
+	  .catch((err) => next(err));
+    next();
+})
+
+module.exports = router;
