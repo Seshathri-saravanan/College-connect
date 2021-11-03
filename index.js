@@ -2,6 +2,7 @@ const express = require("express")
 const userRouter = require("./routes/userRouter")
 const accountRouter = require("./routes/accountRouter");
 const groupRouter = require("./routes/groupRouter")
+const postRouter = require("./routes/postRouter")
 const User = require("./models/User")
 const cookieParser = require("cookie-parser")
 const bodyParser = require("body-parser");
@@ -49,5 +50,6 @@ function auth(req,res,next){
 app.use(auth);
 app.use(accountRouter);
 app.use(groupRouter);
+app.use(postRouter);
 
 app.listen(process.env.PORT || port,()=>{console.log("listening in port",port)});
