@@ -9,6 +9,7 @@ function getPostsByGroupID(posts,groupID){
 }
 
 function getGroupsByUsername(groups,username){
+    console.log("groups",groups,username)
     var groupsByUsername = []
     for(var group of groups){
         if(group.visibleTo.indexOf(username)!=-1){

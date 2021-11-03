@@ -20,7 +20,7 @@ router.get("/group",async (req,res,next)=>{
     const groupID = req.body.groupId;
 	res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    Group.findOne({_id:groupID})
+    Group.findById(groupID)
 	  .then((group) => {
 	        res.statusCode = 200;
 	        res.json({group});
