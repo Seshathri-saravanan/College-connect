@@ -47,6 +47,13 @@ function auth(req,res,next){
     //res.end();
   }
 }
+app.get("/isauth",(req,res,next)=>{
+  if(req.signedCookies && req.signedCookies.user){
+    var username = req.signedCookies.user;
+    User.findOne({username:username}).then(res.json({ID:username})).catch(err=>res.json({ID:false}));
+  }
+  else res.json({ID:false});
+})
 app.use(auth);
 app.use(accountRouter);
 app.use(groupRouter);
