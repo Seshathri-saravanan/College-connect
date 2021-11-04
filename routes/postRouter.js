@@ -58,5 +58,17 @@ router.put("/post",async (req,res,next)=>{
     })
 })
 
+router.delete("/post",async (req,res,next)=>{
+    const post = req.body.post;
+    if(!post){
+        res.json({post:false});
+        return;
+    }
+    var dlt = await Post.deleteOne({_id:post._id})
+    if(dlt && dlt.deletedCount==1){
+        res.json({post:true})
+    }
+    else res.json({post:false});
+})
 
 module.exports = router;

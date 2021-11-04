@@ -30,4 +30,17 @@ router.put("/user",(req,res,next)=>{
 	})
 })
 
+router.delete("/user",async (req,res,next)=>{
+    const user = req.body.user;
+    if(!user){
+        res.json({user:false});
+        return;
+    }
+    var dlt = await Account.deleteOne({_id:user._id})
+    if(dlt && dlt.deletedCount==1){
+        res.json({user:true})
+    }
+    else res.json({user:false});
+})
+
 module.exports = router;

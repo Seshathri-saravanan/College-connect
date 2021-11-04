@@ -82,4 +82,17 @@ router.put("/updateusersingroup",async (req,res,next)=>{
     
 })
 
+router.delete("/group",async (req,res,next)=>{
+    const group = req.body.group;
+    if(!group){
+        res.json({group:false});
+        return;
+    }
+    var dlt = await Group.deleteOne({_id:group._id})
+    if(dlt && dlt.deletedCount==1){
+        res.json({group:true})
+    }
+    else res.json({group:false});
+})
+
 module.exports = router;
