@@ -18,5 +18,17 @@ router.get("/posts",async (req,res,next)=>{
     next();
 })
 
+router.post("/post",async (req,res,next)=>{
+    const username =  req.signedCookies.user;
+	res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    Post.create(req.body).then((post)=>{
+        res.json({post});
+    })
+    .catch(err=>{
+        console.log(err);
+        res.statusCode(400).json({err});
+    });
+})
 
 module.exports = router;

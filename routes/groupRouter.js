@@ -29,4 +29,17 @@ router.get("/group",async (req,res,next)=>{
     next();
 })
 
+router.post("/group",async (req,res,next)=>{
+    const username =  req.signedCookies.user;
+	res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    Group.create(req.body).then((group)=>{
+        res.json({group});
+    })
+    .catch(err=>{
+        console.log(err);
+        res.statusCode(400).json({err});
+    });
+})
+
 module.exports = router;
