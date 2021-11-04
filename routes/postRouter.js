@@ -18,11 +18,24 @@ router.get("/posts",async (req,res,next)=>{
     next();
 })
 
+router.get("/post",(req,res,next)=>{
+    const username =  req.signedCookies.user;
+    const postID = req.body.post && req.body.post.postID;
+    Post.findById(postID)
+	  .then((post) => {
+	        res.statusCode = 200;
+	        res.json({post});
+	      },(err)=>res.json({err}))
+	  .catch((err)=>res.json({err}));
+})
+
+
+
 router.post("/post",async (req,res,next)=>{
     const username =  req.signedCookies.user;
 	res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    Post.create(req.body).then((post)=>{
+    Post.create(req.body && req.body.post).then((post)=>{
         res.json({post});
     })
     .catch(err=>{
@@ -30,5 +43,7 @@ router.post("/post",async (req,res,next)=>{
         res.statusCode(400).json({err});
     });
 })
+
+
 
 module.exports = router;

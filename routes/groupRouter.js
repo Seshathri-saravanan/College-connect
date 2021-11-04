@@ -58,13 +58,13 @@ router.put("/group",async (req,res,next)=>{
     })
 })
 
-router.put("/adduserstogroup",async (req,res,next)=>{
+router.put("/updateusersingroup",async (req,res,next)=>{
     const username =  req.signedCookies.user;
 	res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    var obj = req.body.adduserstogroup;
+    var obj = req.body.updateusersingroup;
     if(!obj){
-        res.json({adduserstogroup:false});
+        res.json({updateusersingroup:false});
         return
     }
     var groupID = obj && obj.groupID;
@@ -74,11 +74,11 @@ router.put("/adduserstogroup",async (req,res,next)=>{
     if(group){
         Group.findOneAndUpdate({_id:groupID},{visibleTo:users},{new:true},(err,group,ngrp)=>{
             console.log("group",group,err,ngrp)
-            if(err)res.json({err,adduserstogroup:false});
-            else res.json({adduserstogroup:true})
+            if(err)res.json({err,updateusersingroup:false});
+            else res.json({updateusersingroup:true})
         })
     }
-    else res.json({adduserstogroup:false,message:"group not found"});
+    else res.json({updateusersingroup:false,message:"group not found"});
     
 })
 
