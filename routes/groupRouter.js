@@ -51,7 +51,7 @@ router.put("/group",async (req,res,next)=>{
     res.setHeader('Content-Type', 'application/json');
     var newgroup = req.body.group;
     console.log("newgroup",newgroup)
-    Group.findOneAndUpdate({_id:newgroup._id},newgroup,(err,group,ngrp)=>{
+    Group.findOneAndUpdate({_id:newgroup._id},newgroup,{new:true},(err,group,ngrp)=>{
         console.log("group",group)
         if(err)res.json({err,group:false});
         else res.json({group:true})
@@ -63,21 +63,22 @@ router.put("/adduserstogroup",async (req,res,next)=>{
 	res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     var obj = req.body.adduserstogroup;
-    var groupID = obj.groupID;
-    var users = obj.userLists;
-    console.log("obj",obj)
+    if(!obj){
+        res.json({adduserstogroup:false});
+        return
+    }
+    var groupID = obj && obj.groupID;
+    var users = obj && obj.usersList;
     var group = await Group.findOne({_id:groupID});
-    console.log("group found",group)
-    /*
+    console.log("group found",group,users)
     if(group){
-        Group.findOneAndUpdate({_id:groupID},{...group,visibleTo:users},(err,group,ngrp)=>{
-            //console.log("group",group)
+        Group.findOneAndUpdate({_id:groupID},{visibleTo:users},{new:true},(err,group,ngrp)=>{
+            console.log("group",group,err,ngrp)
             if(err)res.json({err,adduserstogroup:false});
             else res.json({adduserstogroup:true})
         })
     }
     else res.json({adduserstogroup:false,message:"group not found"});
-    */
     
 })
 
