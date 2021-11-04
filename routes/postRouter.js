@@ -45,5 +45,18 @@ router.post("/post",async (req,res,next)=>{
 })
 
 
+router.put("/post",async (req,res,next)=>{
+    const username =  req.signedCookies.user;
+    const post = req.body.post;
+    if(!post){
+        res.json({post:false});
+        return;
+    }
+	Post.findOneAndUpdate({_id:post._id},post,{new:true},(err,post,ngrp)=>{
+        if(err)res.json({err,post:false});
+        else res.json({post:true})
+    })
+})
+
 
 module.exports = router;
