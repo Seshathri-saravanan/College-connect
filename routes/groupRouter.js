@@ -42,4 +42,18 @@ router.post("/group",async (req,res,next)=>{
     });
 })
 
+
+router.put("/group",async (req,res,next)=>{
+    const username =  req.signedCookies.user;
+	res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    var newgroup = req.body.group;
+    console.log("newgroup",newgroup)
+    Group.findOneAndUpdate({_id:newgroup._id},newgroup,(err,group,ngrp)=>{
+        console.log("group",group)
+        if(err)res.json({err,group:false});
+        else res.json({group:true})
+    })
+})
+
 module.exports = router;
