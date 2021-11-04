@@ -13,14 +13,17 @@ var Group = new Schema({
 	},
 	owners:{
 		type:Array,
+		default:[],
 		required:true
 	},
 	visibleTo:{
 		type:Array,
+		default:[],
 		required:true
 	},
 	profileUrl:{
 		type:Array,
+		default:"",
 		required:true
 	}
 });

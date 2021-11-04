@@ -13,30 +13,37 @@ var Post = new Schema({
 	},
 	description:{
 		type:String,
+		default:"",
 		required:true
 	},
 	type:{
 		type:String,
+		default:"",
 		required:true
 	},
 	file_links:{
 		type:Array,
+		default:[],
 		required:true
 	},
 	expiryTime:{
 		type:String,
+		default:"",
 		required:false
 	},
 	pollData:{
 		type:String,
+		default:"",
 		required:false
 	},
 	pollStatus:{
 		type:String,
+		default:"",
 		required:false
 	},
 	groups:{
 		type:Array,
+		default:[],
 		required:true
 	}
 });
