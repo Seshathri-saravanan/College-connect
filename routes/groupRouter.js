@@ -1,4 +1,6 @@
 const {Router} = require("express");
+const mongoose = require("mongoose");
+const ObjectId = require("mongodb").ObjectId;
 const Group = require("../models/Group.js");
 const bodyParser = require("body-parser");
 const {getGroupsByUsername} = require("../helperFunctions");
@@ -18,22 +20,20 @@ router.get("/groups",async (req,res,next)=>{
 router.get("/group",async (req,res,next)=>{
 	const username =  req.signedCookies.user;
     const groupID = req.body.groupId;
-	res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
     Group.findById(groupID)
 	  .then((group) => {
 	        res.statusCode = 200;
 	        res.json({group});
-	      }, (err) => next(err))
-	  .catch((err) => next(err));
-    next();
+	      },(err)=>res.json({err}))
+	  .catch((err)=>res.json({err}));
+    
 })
 
 router.post("/group",async (req,res,next)=>{
     const username =  req.signedCookies.user;
 	res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    Group.create(req.body).then((group)=>{
+    Group.create({...req.body}).then((group)=>{
         res.json({group});
     })
     .catch(err=>{
@@ -54,6 +54,29 @@ router.put("/group",async (req,res,next)=>{
         if(err)res.json({err,group:false});
         else res.json({group:true})
     })
+})
+
+router.put("/adduserstogroup",async (req,res,next)=>{
+    const username =  req.signedCookies.user;
+	res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    var obj = req.body.adduserstogroup;
+    var groupID = obj.groupID;
+    var users = obj.userLists;
+    console.log("obj",obj)
+    var group = await Group.findOne({_id:groupID});
+    console.log("group found",group)
+    /*
+    if(group){
+        Group.findOneAndUpdate({_id:groupID},{...group,visibleTo:users},(err,group,ngrp)=>{
+            //console.log("group",group)
+            if(err)res.json({err,adduserstogroup:false});
+            else res.json({adduserstogroup:true})
+        })
+    }
+    else res.json({adduserstogroup:false,message:"group not found"});
+    */
+    
 })
 
 module.exports = router;
