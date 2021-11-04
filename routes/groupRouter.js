@@ -19,7 +19,7 @@ router.get("/groups",async (req,res,next)=>{
 
 router.get("/group",async (req,res,next)=>{
 	const username =  req.signedCookies.user;
-    const groupID = req.body.groupId;
+    const groupID = req.body.group && req.body.group.groupId;
     Group.findById(groupID)
 	  .then((group) => {
 	        res.statusCode = 200;
@@ -33,7 +33,9 @@ router.post("/group",async (req,res,next)=>{
     const username =  req.signedCookies.user;
 	res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    Group.create({...req.body}).then((group)=>{
+    const group = req.body.group 
+    Group.create({...group})
+    .then((group)=>{
         res.json({group});
     })
     .catch(err=>{

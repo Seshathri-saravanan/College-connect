@@ -50,7 +50,8 @@ function auth(req,res,next){
 app.get("/isauth",(req,res,next)=>{
   if(req.signedCookies && req.signedCookies.user){
     var username = req.signedCookies.user;
-    User.findOne({username:username}).then(res.json({ID:username})).catch(err=>res.json({ID:false}));
+    console.log("username",username)
+    User.findOne({username:username}).then(user=>res.json({ID:user.username})).catch(err=>res.json({ID:false}));
   }
   else res.json({ID:false});
 })

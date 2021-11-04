@@ -1,11 +1,11 @@
 const mongoose = require("mongoose")
-const ObjectId = require("mongodb").ObjectId;
+const { v4: uuidv4 } = require('uuid');
 const {Schema} = mongoose
 
 var Group = new Schema({
 	_id:{
 		type:String,
-		default:new ObjectId().toString()
+		default:uuidv4
 	},
 	name:{
 		type:String,
