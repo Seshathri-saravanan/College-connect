@@ -2,6 +2,10 @@ const mongoose = require("mongoose")
 const {Schema} = mongoose
 
 var Post = new Schema({
+	_id:{
+		type:String,
+		default:new ObjectId().toString()
+	},
 	ownerID:{
 		type:String,
 		required:true
