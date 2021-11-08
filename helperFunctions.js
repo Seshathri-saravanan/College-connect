@@ -6,7 +6,7 @@ function getPostsByGroupID(posts,groupID){
                 postsByGroupID.push(post);
         }
     }
-    return post;
+    return postsByGroupID;
 }
 
 function getGroupsByUsername(groups,username){

@@ -4,6 +4,19 @@ const bodyParser = require("body-parser");
 
 var router = Router();
 
+router.get("/users",(req,res,next)=>{
+	const username =  req.signedCookies.user;
+    Account.find({})
+	.then((users) => {
+		res.statusCode = 200;
+		res.setHeader('Content-Type', 'application/json');
+		res.statusCode = 200;
+		res.json({users});
+	}, (err) => next(err)) 
+	.catch((err) => {
+		res.json({err,users:false})
+	});
+})
 router.get("/user",(req,res,next)=>{
 	const username =  req.signedCookies.user;
     Account.findOne({username:username})

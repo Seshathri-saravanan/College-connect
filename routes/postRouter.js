@@ -14,7 +14,7 @@ router.get("/posts",async (req,res,next)=>{
     const posts = await Post.find({}).populate("owner").populate("groups");
     const groups = await Group.find({}).populate("owners").populate("visibleTo");
     var userposts = getPostsByUsername(posts,groups,username);
-    res.json({posts:posts});
+    res.json({posts:userposts});
     next();
 })
 
