@@ -21,7 +21,7 @@ router.get("/posts",async (req,res,next)=>{
 
 router.get("/post",(req,res,next)=>{
     const username =  req.signedCookies.user;
-    const postID = req.body.post && req.body.post.postID;
+    const postID = req.query && req.query.postID;
     Post.findById(postID)
     .populate("owner").populate("groups")
 	  .then((post) => {
@@ -62,12 +62,12 @@ router.put("/post",async (req,res,next)=>{
 })
 
 router.delete("/post",async (req,res,next)=>{
-    const post = req.body.post;
-    if(!post){
+    const postID = req.query &&  req.query.postID;
+    if(!postID){
         res.json({post:false});
         return;
     }
-    var dlt = await Post.deleteOne({_id:post._id})
+    var dlt = await Post.deleteOne({_id:postID})
     if(dlt && dlt.deletedCount==1){
         res.json({post:true})
     }
