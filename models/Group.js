@@ -9,18 +9,23 @@ var Group = new Schema({
 	},
 	name:{
 		type:String,
+		unique:true,
 		required:true
 	},
 	owners:{
-		type:Array,
+		type:[{ type: String, ref: 'Account' ,sparse:true}],
+		sparse:true,
 		default:[],
 		required:true
 	},
 	visibleTo:{
-		type:Array,
+		
+		type:[{ type: String, ref: 'Account',sparse:true }],
+		sparse:true,
 		default:[],
 		required:true
 	},
+
 	profileUrl:{
 		type:Array,
 		default:"",

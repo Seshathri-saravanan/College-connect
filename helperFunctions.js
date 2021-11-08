@@ -1,8 +1,9 @@
 function getPostsByGroupID(posts,groupID){
     var postsByGroupID=[]
     for(var post of posts){
-        if(post.groups.indexOf(groupID)!=-1){
-            postsByGroupID.push(post);
+        for(var grp of post.groups){
+            if(grp && grp.groupID==groupID)
+                postsByGroupID.push(post);
         }
     }
     return post;
@@ -12,10 +13,12 @@ function getGroupsByUsername(groups,username){
     console.log("groups",groups,username)
     var groupsByUsername = []
     for(var group of groups){
-        if(group.visibleTo.indexOf(username)!=-1){
-            groupsByUsername.push(group);
+        for(var user of group.visibleTo){
+            if(user && user.username==username)
+                groupsByUsername.push(group);
         }
     }
+    
     return groupsByUsername;
 }
 

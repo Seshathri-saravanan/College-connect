@@ -11,17 +11,19 @@ router.get("/posts",async (req,res,next)=>{
 	const username =  req.signedCookies.user;
 	res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    const posts = await Post.find({});
-    const groups = await Group.find({});
+    const posts = await Post.find({}).populate("owner").populate("groups");
+    const groups = await Group.find({}).populate("owners").populate("visibleTo");
     var userposts = getPostsByUsername(posts,groups,username);
-    res.json({posts:userposts});
+    res.json({posts:posts});
     next();
 })
+
 
 router.get("/post",(req,res,next)=>{
     const username =  req.signedCookies.user;
     const postID = req.body.post && req.body.post.postID;
     Post.findById(postID)
+    .populate("owner").populate("groups")
 	  .then((post) => {
 	        res.statusCode = 200;
 	        res.json({post});
@@ -35,7 +37,8 @@ router.post("/post",async (req,res,next)=>{
     const username =  req.signedCookies.user;
 	res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    Post.create(req.body && req.body.post).then((post)=>{
+    Post.create(req.body && req.body.post)
+    .then((post)=>{
         res.json({post});
     })
     .catch(err=>{

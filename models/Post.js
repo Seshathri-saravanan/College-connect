@@ -7,8 +7,10 @@ var Post = new Schema({
 		type:String,
 		default:uuidv4
 	},
-	ownerID:{
-		type:String,
+	owner:{
+		type:[{ type: String, ref: 'Account' ,sparse:true}],
+		sparse:true,
+		default:[],
 		required:true
 	},
 	description:{
@@ -42,7 +44,8 @@ var Post = new Schema({
 		required:false
 	},
 	groups:{
-		type:Array,
+		type:[{ type: String, ref: 'Group' ,sparse:true}],
+		sparse:true,
 		default:[],
 		required:true
 	}

@@ -9,8 +9,9 @@ var Account = new Schema({
 	},
 	username:{
 		type:String,
-		unique:true,
-		required:true
+		unique:false,
+		required:true,
+
 	},
 	name:{
 		type:String,
