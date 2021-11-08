@@ -32,14 +32,16 @@ router.get("/user",(req,res,next)=>{
 })
 
 router.put("/user",(req,res,next)=>{
+	const username =  req.signedCookies.user;
 	var user = req.body.user;
 	if(!user){
 		res.json({user:false});
 		return;
 	}
-	Account.findOneAndUpdate({username:user.username},user,{new:true},(err,user,ngrp)=>{
+	Account.findOneAndUpdate({username:username},user,{new:true},(err,user,ngrp)=>{
 		if(err)res.json({err,user:false});
-		else res.json({user:true})
+		else res.json({user:user})
+		console.log(err,user,ngrp)
 	})
 })
 
