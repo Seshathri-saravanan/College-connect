@@ -35,7 +35,7 @@ router.post('/signup', (req, res, next) => {
  router.post('/login', (req, res,next) => {
    console.log("login req",req.body)
   User.findOne({username:req.body.username})
-  .then((user) => {
+  .then(async (user) => {
       console.log('user found ', user);
       if(!user){
         return res.json({account:null,msg:"User not found!"});
@@ -46,9 +46,10 @@ router.post('/signup', (req, res, next) => {
       else{
         res.statusCode = 200;
         res.cookie('user',user.username,{signed:true,maxAge:900000000,sameSite:"none",secure:true})
+        var account = await Account.findOne({username:req.body.username})
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Access-Control-Allow-Credentials', true);
-        res.json({user});
+        res.json({user:account});
        // console.log("setting credn headers",res.getHeaders())
         
       }
