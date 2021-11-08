@@ -19,7 +19,8 @@ router.get("/groups",async (req,res,next)=>{
 
 router.get("/group",async (req,res,next)=>{
 	const username =  req.signedCookies.user;
-    const groupID = req.body.group && req.body.group.groupID;
+    const groupID = req.query && req.query.groupID;
+    //console.log(req.query)
     Group.findById(groupID)
     .populate('owners')
     .populate('visibleTo')

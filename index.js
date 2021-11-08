@@ -29,10 +29,10 @@ function addHeaders(req,res,next){
   res.setHeader('Access-Control-Allow-Methods', 'GET, DELETE, HEAD, OPTIONS, POST');
   res.setHeader('Access-Control-Allow-Credentials', true);
 	res.setHeader("Access-Control-Max-Age", "1800");
-  console.log(req.method)
+  console.log(req.body)
   if(req.method=="OPTIONS"){
-    res.status(204).end();
-    console.log("204 res");
+    res.status(200).end();
+    console.log("204 res",req.body);
   }
   else next();
 }
