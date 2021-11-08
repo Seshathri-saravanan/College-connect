@@ -38,10 +38,10 @@ router.post('/signup', (req, res, next) => {
   .then((user) => {
       console.log('user found ', user);
       if(!user){
-        return res.status(400).send("User not found!");
+        return res.json({account:null,msg:"User not found!"});
       }
       else if(user.password!=req.body.password){
-        return res.status(400).send("Incorrect password!");
+        return res.json({account:null,msg:"Incorrect password"});
       }
       else{
         res.statusCode = 200;
