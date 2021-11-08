@@ -24,12 +24,17 @@ app.use(bodyParser.urlencoded({extended:true}));
 //app.use(cors());
 app.use(cookieParser("sfihf"));
 function addHeaders(req,res,next){
-  res.setHeader('Access-Control-Allow-Origin','http://localhost:3000',);
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
+  res.setHeader('Access-Control-Allow-Origin',req.headers.origin || '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, DELETE, HEAD, OPTIONS, POST');
   res.setHeader('Access-Control-Allow-Credentials', true);
-  //console.log("setting acces con c header as true",req.headers,res.headers);
-  next();
+	res.setHeader("Access-Control-Max-Age", "1800");
+  console.log(req.method)
+  if(req.method=="OPTIONS"){
+    res.status(204).end();
+    console.log("204 res");
+  }
+  else next();
 }
 app.use(addHeaders)
 app.use(userRouter);

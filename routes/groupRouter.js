@@ -19,12 +19,12 @@ router.get("/groups",async (req,res,next)=>{
 
 router.get("/group",async (req,res,next)=>{
 	const username =  req.signedCookies.user;
-    const groupID = req.body.group && req.body.group.groupId;
+    const groupID = req.body.group && req.body.group.groupID;
     Group.findById(groupID)
     .populate('owners')
     .populate('visibleTo')
 	  .then((group) => {
-	        res.statusCode = 200;
+            res.statusCode=200;
 	        res.json({group});
 	      },(err)=>res.json({err}))
 	  .catch((err)=>res.json({err}));
