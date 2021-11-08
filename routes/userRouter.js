@@ -22,10 +22,10 @@ router.post('/signup', (req, res, next) => {
       }
    })
    User.create(req.body).then((user) => {
-      Account.create({username:user.username,name:user.username}).then((account)=>{
+      Account.create(req.body).then((user)=>{
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json({account:{username:user.username}});
+        res.json({user});
       }).catch((err)=>console.log(err));
       
      
