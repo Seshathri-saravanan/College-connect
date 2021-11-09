@@ -58,7 +58,7 @@ router.put("/group",async (req,res,next)=>{
     Group.findOneAndUpdate({_id:newgroup._id},newgroup,{new:true},(err,group,ngrp)=>{
         console.log("group",group)
         if(err)res.json({err,group:false});
-        else res.json({group:true})
+        else res.json({group:group})
     })
 })
 
