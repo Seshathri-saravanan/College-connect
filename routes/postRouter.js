@@ -55,9 +55,10 @@ router.put("/post",async (req,res,next)=>{
         res.json({post:false});
         return;
     }
-	Post.findOneAndUpdate({_id:post._id},post,{new:true},(err,post,ngrp)=>{
+	Post.findOneAndUpdate({_id:post._id},post,{new:true}).populate("owner").populate("groups")
+    .exec((err,post,ngrp)=>{
         if(err)res.json({err,post:false});
-        else res.json({post:true})
+        else res.json({post})
     })
 })
 
