@@ -39,8 +39,9 @@ router.post("/group",async (req,res,next)=>{
     const group = req.body.group 
     Group.create({...group})
     
-    .then((group)=>{
-        res.json({group});
+    .then(async (group)=>{
+        var ngroup = await Group.findOne({_id:group._id}).populate("owners").populate("visibleTo");
+        res.json({group:ngroup});
     })
     .catch(err=>{
         console.log(err);

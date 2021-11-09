@@ -39,7 +39,7 @@ router.post("/post",async (req,res,next)=>{
     res.setHeader('Content-Type', 'application/json');
     Post.create(req.body && req.body.post)
     .then(async (post)=>{
-        var npost = await Post.findOne({id:post._id}).populate('groups');
+        var npost = await Post.findOne({_id:post._id}).populate('groups');
         res.json({post:npost});
     })
     .catch(err=>{
