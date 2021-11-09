@@ -31,7 +31,7 @@ var Group = new Schema({
 	},
 
 	profileUrl:{
-		type:Array,
+		type:String,
 		default:"",
 		required:true
 	}
