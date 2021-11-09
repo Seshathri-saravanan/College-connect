@@ -8,7 +8,8 @@ function getPostsByGroupID(posts,groupID){
             }
         }
     }
-    return postsByGroupID;
+    var postsSet = new Set(postsByGroupID);
+    return Array.from(postsSet);
 }
 
 function getGroupsByUsername(groups,username){
@@ -22,8 +23,8 @@ function getGroupsByUsername(groups,username){
             }
         }
     }
-    
-    return groupsByUsername;
+    var groupset = new Set(groupsByUsername);
+    return Array.from(groupset);
 }
 
 
@@ -33,7 +34,8 @@ function getPostsByUsername(posts,groups,username){
     for(var group of groupsByUsername){
         postsByUsername = [...postsByUsername,...getPostsByGroupID(posts,group.ID)]
     }
-    return postsByUsername;
+    var postsSet = new Set(postsByUsername);
+    return Array.from(postsSet);
 }
 
 module.exports = {
