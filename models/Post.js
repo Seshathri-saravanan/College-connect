@@ -13,6 +13,11 @@ var Post = new Schema({
 		default:[],
 		required:true
 	},
+	createdTime:{
+		type:Date,
+		required:true,
+		default:Date,
+	},
 	description:{
 		type:String,
 		default:"",

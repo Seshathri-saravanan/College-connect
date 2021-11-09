@@ -12,6 +12,10 @@ var Group = new Schema({
 		unique:true,
 		required:true
 	},
+	description:{
+		type:String,
+		required:true
+	},
 	owners:{
 		type:[{ type: String, ref: 'Account' ,sparse:true}],
 		sparse:true,

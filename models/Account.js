@@ -23,17 +23,17 @@ var Account = new Schema({
 		default:"",
 		required:false
 	},
-	usertype:{
+	type:{
+		type:String,
+		default:"Student",
+		required:false
+	},
+	rollNo:{
 		type:String,
 		default:"",
 		required:false
 	},
-	rollno:{
-		type:String,
-		default:"",
-		required:false
-	},
-	admissionyear:{
+	admissionYear:{
 		type:String,
 		default:"",
 		required:false
@@ -43,7 +43,7 @@ var Account = new Schema({
 		default:"",
 		required:false
 	},
-	profileurl:{
+	profileUrl:{
 		type:String,
 		default:"",
 		required:false
