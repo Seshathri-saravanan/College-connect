@@ -7,10 +7,12 @@ var Post = new Schema({
 		type:String,
 		default:uuidv4
 	},
-	owner:{
-		type:[{ type: String, ref: 'Account' ,sparse:true}],
-		sparse:true,
-		default:[],
+	ownerID:{
+		type:String,
+		required:true
+	},
+	ownerProfileUrl:{
+		type:String,
 		required:true
 	},
 	createdTime:{

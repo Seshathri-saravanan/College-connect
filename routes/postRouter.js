@@ -11,7 +11,7 @@ router.get("/posts",async (req,res,next)=>{
 	const username =  req.signedCookies.user;
 	res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    const posts = await Post.find({}).populate("owner").populate("groups");
+    const posts = await Post.find({}).populate("groups");
     const groups = await Group.find({}).populate("owners").populate("visibleTo");
     var userposts = getPostsByUsername(posts,groups,username);
     res.json({posts:userposts});
@@ -23,7 +23,7 @@ router.get("/post",(req,res,next)=>{
     const username =  req.signedCookies.user;
     const postID = req.query && req.query.postID;
     Post.findById(postID)
-    .populate("owner").populate("groups")
+    .populate("groups")
 	  .then((post) => {
 	        res.statusCode = 200;
 	        res.json({post});
@@ -55,7 +55,7 @@ router.put("/post",async (req,res,next)=>{
         res.json({post:false});
         return;
     }
-	Post.findOneAndUpdate({_id:post._id},post,{new:true}).populate("owner").populate("groups")
+	Post.findOneAndUpdate({_id:post._id},post,{new:true}).populate("groups")
     .exec((err,post,ngrp)=>{
         if(err)res.json({err,post:false});
         else res.json({post})
