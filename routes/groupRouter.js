@@ -55,12 +55,12 @@ router.put("/group",async (req,res,next)=>{
     res.setHeader('Content-Type', 'application/json');
     var newgroup = req.body.group;
     console.log("newgroup",newgroup)
-    Group.findOneAndUpdate({_id:newgroup._id},newgroup,{new:true},(err,group,ngrp)=>{
+    Group.findOneAndUpdate({_id:newgroup._id},newgroup,{new:true}).populate('owners').populate('visibleTo')
+    .exec((err,group,ngrp)=>{
         console.log("group",group)
         if(err)res.json({err,group:false});
         else{
-            var ngrp = group.populate("owners").populate("visibleTo");
-            res.json({group:ngrp})
+            res.json({group})
         }
     })
 })
