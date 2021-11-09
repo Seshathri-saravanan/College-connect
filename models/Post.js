@@ -33,7 +33,7 @@ var Post = new Schema({
 	file_links:{
 		type:Array,
 		default:[],
-		required:true
+		required:false
 	},
 	expiryTime:{
 		type:String,
