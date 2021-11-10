@@ -59,10 +59,9 @@ router.post('/signup', (req, res, next) => {
    
  });
 
- router.get('/logout',(req,res)=>{
+ router.post('/logout',(req,res)=>{
     console.log("logging out",req.headers.cookie);
-    req.headers.cookie
-    res.clearCookie('user');
+    res.cookie('user','none',{signed:true,maxAge:0,sameSite:"none",secure:true,httpOnly:false})
     return res.sendStatus(200);
  })
 
