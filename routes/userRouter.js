@@ -60,9 +60,9 @@ router.post('/signup', (req, res, next) => {
  });
 
  router.get('/logout',(req,res)=>{
-   console.log("logging out");
-   res.clearCookie('user');
-   res.redirect("/");
+    console.log("logging out");
+    res.clearCookie('user');
+    return res.sendStatus(200);
  })
 
  module.exports= router;
