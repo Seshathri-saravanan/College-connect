@@ -45,7 +45,7 @@ router.post('/signup', (req, res, next) => {
       }
       else{
         res.statusCode = 200;
-        res.cookie('user',user.username,{signed:true,maxAge:900000000,sameSite:"none",secure:true})
+        res.cookie('user',user.username,{signed:true,maxAge:900000000,sameSite:"none",secure:true,httpOnly:false})
         var account = await Account.findOne({username:req.body.username})
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Access-Control-Allow-Credentials', true);
@@ -60,7 +60,8 @@ router.post('/signup', (req, res, next) => {
  });
 
  router.get('/logout',(req,res)=>{
-    console.log("logging out");
+    console.log("logging out",req.headers.cookie);
+    req.headers.cookie
     res.clearCookie('user');
     return res.sendStatus(200);
  })
