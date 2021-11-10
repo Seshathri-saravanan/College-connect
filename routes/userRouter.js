@@ -62,7 +62,7 @@ router.post('/signup', (req, res, next) => {
  router.get('/logout',(req,res)=>{
    console.log("logging out");
    res.clearCookie('user');
-   res.json({logout: true, status: 'You are successfully logged out!'});
+   res.redirect("/");
  })
 
  module.exports= router;
